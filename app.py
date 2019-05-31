@@ -6,7 +6,7 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
