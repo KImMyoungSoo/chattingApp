@@ -21,7 +21,7 @@ def close_connection(Exception):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('login.html')
 
 if __name__ == '__main__':
     socketio.run(app, port=9001, debug=True)
