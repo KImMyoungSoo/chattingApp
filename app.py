@@ -1,5 +1,5 @@
 # _*_ coding: utf-8 _*_
-from flask import Flask, render_template, g
+from flask import Flask, render_template, session, request, redirect, g
 from flask_socketio import SocketIO, emit
 import sqlite3
 
@@ -21,7 +21,24 @@ def close_connection(Exception):
 
 @app.route('/')
 def index():
-    return render_template('login.html')
+    if session.get("account_id") is not None:
+        return render_template('signup.html')
+    else :
+        return render_template('login.html')
+
+@app.route('/account/login')
+def login():
+    user_id = request.form["user_id"]
+    user_pw = request.form["user_pw"]
+
+    '''
+    @TODO : db connect and compare user id and pw
+    '''
+    # session['account_id'] = 
+    '''
+    @TODO : session create with db
+    '''
+    return redirect('/', code=302)
 
 if __name__ == '__main__':
     socketio.run(app, port=9001, debug=True)
