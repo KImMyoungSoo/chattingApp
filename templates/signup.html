@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>회원가입 페이지</title>
+        <style>
+            body{
+                text-align: center
+            }
+            table{
+                text-align: center;
+                margin: auto;
+                border-style: dotted
+            }
+            .arial{
+                font-family:serif
+            }
+            
+        </style>
+        <script>
+            function btn(){
+                alert("저장되었습니다!")
+            }
+        </script>
+    </head>
+    <body>
+        <h1 class="arial">" Sign up Page "</h1>
+        <div class="ballon"></div>
+        <img src="/Users/gimminjae/Desktop/login/bycycle.png" style="width: 260px">
+        <form action="">
+            <table style="padding-top: 25px; padding-right: 30px;padding-bottom: 25px;padding-left: 30px;">
+                <tr>
+                    <td>이름 : </td>
+                    <td><input type="text" name="user's_name" placeholder="이름을 입력하세요."></td><br><br>
+                </tr>
+                <tr>
+                    <td>아이디 : </td>
+                    <td><input type="text" name="user's_id" placeholder="아이디를 입력하세요."></td>
+                </tr>
+                 <tr>
+                    <td>비밀번호 : </td>
+                     <td><input type="text" name="user's_id" placeholder="비밀번호를 입력하세요."></td>
+                </tr>
+                 <tr>
+                    <td>이메일 : </td>
+                    <td><input type="text" name="user's_id" placeholder="이메일을 입력하세요."></td>
+                    <td>
+                        <select name="email_address">
+                            <option value="gmail.com">@gmail.com</option>
+                            <option value="name.com">@naver.com</option>
+                            <option value="yahoo.como">@yahoo.com</option>
+                            <option value="hanyang.ac.kr">@hanyang.ac.kr</option>
+                            <option value="x">직접입력</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="저장하기" onclick="jacascripit:btn()">
+            <a href="./login.html"><input type="button" value=" 로그인하러가기"></a>
+            <p> 꼭 "저장하기"를 누르신 후 "로그인 하러 가기" 버튼을 눌러주세요!</p>     
+        </form>
+    </body>
+</html>

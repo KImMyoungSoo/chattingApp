@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>								
+	<head>
+		<title>로그인</title>
+		<style>
+			input[type=text], input[type=Password]{
+				width: 50%;
+  				padding: 12px 20px;
+  				margin: 8px 0;
+  				display: inline-block;
+  				border: 1px solid #ccc;
+ 				border-radius: 4px;
+				box-sizing: border-box;
+			
+			}
+			body,input[type = text],input[type = Password]{
+				text-align: center
+			}
+			div{
+				border-radius: 5px;
+  				background-color: #f2f2f2;
+ 				padding: 20px;
+			}
+			input[type=submit]{
+				display: inline-block;
+  				padding: 15px 25px;
+  				font-size: 24px;
+ 				cursor: pointer;
+  				text-align: center;
+ 				text-decoration: none;
+				outline: none;
+ 				color: #fff;
+ 				background-color: #4CAF50;
+ 				border: none;
+ 				border-radius: 15px;
+  				box-shadow: 0 9px #999;
+			}
+			input[type=button]{
+				display: inline-block;
+  				padding: 15px 25px;
+  				font-size: 24px;
+ 				cursor: pointer;
+  				text-align: center;
+ 				text-decoration: none;
+				outline: none;
+ 				color: #fff;
+ 				background-color: #4CAF50;
+ 				border: none;
+ 				border-radius: 15px;
+  				box-shadow: 0 9px #999;
+			}
+			input[type=submit]:active{
+  			background-color: #3e8e41;
+  			box-shadow: 0 5px #666;
+ 			transform: translateY(4px);
+			}
+			input[type=button]:active {
+  			background-color: #3e8e41;
+  			box-shadow: 0 5px #666;
+ 			transform: translateY(4px);
+			}
+		</style>
+		<script>
+			function btn(){
+				alert("꼭 저장하기를 누른 다음 로그인 하기를 눌러주세요.")
+			}
+		</script>
+	</head>
+	<body>
+		<img src="/Users/gimminjae/Desktop/login/bycycle.png" style="width: 260px">
+		<h1 style="font-size: 40pt">Power Rider's Talk</h1>
+		<div style="display:inline-block">
+			<form action="#"> 								
+				<label for="ID" style="font-size: 20pt">ID : </label>
+				<input type="text" id="ID" style="width: 250px;height:40px;font-size: 15pt;margin-bottom: 20px;" placeholder="아이디를 입력하세요."><br>
+		
+				<label for="Password" style="font-size: 20pt">PW : </label>
+				<input type="Password" id="Password" style="width: 250px;height:40px; font-size: 15pt" placeholder="비밀번호를 입력하세요.""><br>
+				<input type="submit" id="Login button" value="로그인" style="padding-left: 8px;padding-right: 9px;font-size: 15pt;border-right-width: 0px;margin-right: 0px;margin-left: 9px;">
+				<a id="sign_up_button" href="./회원가입.html" style="padding-left: 8px;padding-right: 8px;margin-left: 13px;font-size: 15pt;border-top-width: 15px;margin-top: 15px;">
+				<input type="button" onclick="javacript:btn()" value="회원가입" style="padding-right: 7px;padding-left: 7px;padding-top: 16px;padding-bottom: 16px;font-size: 14pt;border-top-width: 0px;" ></a>
+			</form>
+		</div>
+	</body>
+</html>
