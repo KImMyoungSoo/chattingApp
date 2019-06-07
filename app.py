@@ -11,11 +11,11 @@ DATABASE = 'test.db'
 def init_db():
     db = sqlite3.connect("test.db")
     cur = db.cursor()
-    tb_lst = cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    if(tb_lst == None):
+    tb_lst = cur.execute("SELECT count(name) FROM sqlite_master WHERE type='table';")
+    if(tb_lst == 0):
         cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, real_name TEXT);")
         print("> Create user table Sucess.")
-    cur.commit()
+    db.commit()
     cur.close()
     db.close()
     
@@ -37,7 +37,7 @@ def login():
     @TODO : db connect and compare user id and pw
     디비에서 받아온 user_id와 pw 를 꼭 변수로 받아 둘 것!!
     '''
-    flag = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid = '%s' AND pwd = '%s');")
+    flag = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid = '%s' AND pwd = '%s');", user_id, user_pw)
     if flag == 1:
         return [user_id, user_pw]
     else:
@@ -71,4 +71,5 @@ def create():
 
 #app start
 if __name__ == '__main__':
+    init_db()
     socketio.run(app, port=9001, debug=True)
