@@ -3,47 +3,31 @@
     <head>
 		<meta charset="utf-8"/>
         <title>회원가입 페이지</title>
-        <style>
-            body{
-                text-align: center
-            }
-            table{
-                text-align: center;
-                margin: auto;
-                border-style: dotted
-            }
-            .arial{
-                font-family:serif
-            }
-            
-        </style>
-        <script>
-			function btn(){
-				alert("저장완료!")
-            }
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script type="text/javascript" src="../static/js/index.js"></script>
+        <link href="../static/css/signup.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <h1 class="arial">" Sign up Page "</h1>
         <div class="ballon"></div>
         <img src="../static/img/bycycle.png" style="width: 260px">
-        <form action="">
+        <form action="/account/create" method="post">
             <table style="padding-top: 25px; padding-right: 30px;padding-bottom: 25px;padding-left: 30px;">
                 <tr>
                     <td>이름 : </td>
-                    <td><input type="text" id="user's_name" name="user's_name" placeholder="이름을 입력하세요."></td><br><br>
+                    <td><input type="text" name="user_name" placeholder="이름을 입력하세요."></td><br><br>
                 </tr>
                 <tr>
                     <td>아이디 : </td>
-                    <td><input type="text" id="user's_ID" name="user's_id" placeholder="아이디를 입력하세요."></td>
+                    <td><input type="text" name="user_id" placeholder="아이디를 입력하세요."></td>
                 </tr>
                  <tr>
                     <td>비밀번호 : </td>
-                     <td><input type="text" id="user's_passWord" name="user's_password" placeholder="비밀번호를 입력하세요."></td>
+                     <td><input type="text" name="user_pw" placeholder="비밀번호를 입력하세요."></td>
                 </tr>
                  <tr>
                     <td>이메일 : </td>
-                    <td><input type="text" id="user's_emial" name="user's_email" placeholder="이메일을 입력하세요."></td>
+                    <td><input type="text" name="user_email" placeholder="이메일을 입력하세요."></td>
                     <td>
                         <select name="email_address">
                             <option value="gmail.com">@gmail.com</option>
@@ -55,8 +39,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" id="save_user's_inform"value="저장하기" onclick="javacript:btn()"></a>
+            <input type="submit" id="create_acc" value="저장하기"></a>
         </form>
-        <p> 꼭 <strong>"저장하기"</strong>를 누르신 후 <strong>"채팅하러가기"</strong>버튼을 눌러주세요!</p>  
     </body>
 </html>
