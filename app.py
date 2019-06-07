@@ -7,16 +7,17 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 DATABASE = 'test.db'
 
-
-    
-def check_db(db_name):
+#db functions
+def init_db():
     db = sqlite3.connect("test.db")
     cur = db.cursor()
-    flag = cur.execute("SELECT count(name) FROM sqlite_master WHERE type='table' AND name='?';", db_name)
-    if flag == 1:
-        return True
-    else:
-        return False
+    tb_lst = cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    if(tb_lst == None):
+        cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, real_name TEXT);")
+        print("> Create user table Sucess.")
+    cur.commit()
+    cur.close()
+    db.close()
     
 @app.route('/')
 def index():
@@ -67,6 +68,7 @@ def create():
     user_pw = request.form["user_pw"]
     user_em = request.form["user_email"]
     user_name = request.form["user_name"]
+    
     db = sqlite3.connect()
     cur = db.cursor()
     cur.execute("INSERT INTO user(userid, pwd, email, name) VALUES(?, ?, ?, ?)", user_id, user_pw, user_em, user_name)
@@ -74,9 +76,6 @@ def create():
     cur.close()
     db.close()
 
-    '''
-    @TODO : 디비에 user 추가 -> 회원가입 페이지로 랜더링
-    '''
     return redirect('/', code=302)
 
 #app start
