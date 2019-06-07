@@ -14,8 +14,8 @@ def init_db():
     cur.execute("SELECT count(name) FROM sqlite_master WHERE type='table';")
     tb_lst = cur.fetchone()[0]
     if(tb_lst == 0):
-        cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, username TEXT);")
         print("> created DB")
+        cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, username TEXT);")
     db.commit()
     cur.close()
     db.close()
@@ -60,7 +60,7 @@ def create():
     db = sqlite3.connect('test.db')
     cur = db.cursor()
     cur.execute("INSERT INTO user(userid, pwd, email, username) VALUES(?, ?, ?, ?)", (user_id, user_pw, user_em, user_name))
-    cur.commit()
+    db.commit()
     cur.close()
     db.close()
 
