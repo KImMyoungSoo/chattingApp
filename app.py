@@ -39,6 +39,7 @@ def login():
     디비에서 받아온 user_id와 pw 를 꼭 변수로 받아 둘 것!!
     '''
     flag = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid = '%s' AND pwd = '%s');", user_id, user_pw)
+    db.commit()
     if flag == 1:
         return [user_id, user_pw]
     else:
@@ -64,7 +65,7 @@ def create():
     db = sqlite3.connect()
     cur = db.cursor()
     cur.execute("INSERT INTO user(userid, pwd, email, name) VALUES(?, ?, ?, ?)", user_id, user_pw, user_em, user_name)
-    cur.commit()
+    db.commit()
     cur.close()
     db.close()
 
