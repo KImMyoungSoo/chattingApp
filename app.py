@@ -7,17 +7,17 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 DATABASE = 'test.db'
 
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-    return db
-
-@app.teardown_appcontext
-def close_connection(Exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
+def get_login(userid, pwd):
+    db = sqlite3.connect("test.db")
+    cur = db.cursor()
+    res = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid='%s' AND pwd = '%s' AS SUCCESS", userid, pwd)
+    db.commit()
+    cur.close()
+    db.close()
+    if res == 1:
+        return True
+    else:
+        return False
 
 @app.route('/')
 def index():
@@ -35,6 +35,7 @@ def login():
     '''
     @TODO : db connect and compare user id and pw
     '''
+    if(get_login(user_id, user_pw) == True):
     # session['account_id'] = 
     '''
     @TODO : session create with db
