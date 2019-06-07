@@ -28,20 +28,19 @@ def index():
         return render_template('login.html')
 
 # login function
-@app.route('/account/login')
+@app.route('/account/login', methods=["POST"])
 def login():
-    user_id = request.form["user_id"]
-    user_pw = request.form["user_pw"]
-
     db = sqlite3.connect("test.db")
     cur = db.cursor()
     user_id = request.form["user_id"]
     user_pw = request.form["user_pw"]
     
     
-    flag = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid = '%s' AND pwd = '%s');", user_id, user_pw)
+    cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid = ? AND pwd = ?);", (user_id, user_pw))
+    flag = cur.fetchone()[0]
     if flag == 1:
         session["account_id"] = user_id
+        print('> session : ' + session['account_id'])
         return redirect('/', code=302)
     else:
         return redirect('/', code=302)
