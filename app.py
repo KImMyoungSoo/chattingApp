@@ -1,7 +1,6 @@
 # _*_ coding: utf-8 _*_
 from flask import Flask, render_template, session, request, redirect, g
 from flask_socketio import SocketIO, emit
-from flask_sqlalchemy import SQLAlchemy, inspect
 import sqlite3
 
 app = Flask(__name__)
@@ -12,10 +11,11 @@ DATABASE = 'test.db'
 def init_db():
     db = sqlite3.connect("test.db")
     cur = db.cursor()
-    tb_lst = cur.execute("SELECT count(name) FROM sqlite_master WHERE type='table';")
+    cur.execute("SELECT count(name) FROM sqlite_master WHERE type='table';")
+    tb_lst = cur.fetchone()[0]
     if(tb_lst == 0):
         cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, username TEXT);")
-        
+        print("> created DB")
     db.commit()
     cur.close()
     db.close()
