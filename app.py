@@ -29,29 +29,20 @@ def index():
 # login function
 @app.route('/account/login')
 def login():
-    user_id = request.form["user_id"]
-    user_pw = request.form["user_pw"]
-
     db = sqlite3.connect("test.db")
     cur = db.cursor()
-    '''
-    @TODO : db connect and compare user id and pw
-    '''
-    # session['account_id'] = 
-    '''
-    @TODO : session create with db
-    '''
-    return redirect('/', code=302)
-
-@app.route('/account/login')
-def login():
     user_id = request.form["user_id"]
     user_pw = request.form["user_pw"]
-
     '''
     @TODO : db connect and compare user id and pw
     디비에서 받아온 user_id와 pw 를 꼭 변수로 받아 둘 것!!
     '''
+    flag = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid = '%s' AND pwd = '%s');")
+    if flag == 1:
+        return [user_id, user_pw]
+    else:
+        return
+    
     # session['account_id'] = 
     '''
     @TODO : session create with db
