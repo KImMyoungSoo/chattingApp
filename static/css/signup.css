@@ -1,0 +1,11 @@
+body{
+    text-align: center
+}
+table{
+    text-align: center;
+    margin: auto;
+    border-style: dotted
+}
+.arial{
+    font-family:serif
+}
