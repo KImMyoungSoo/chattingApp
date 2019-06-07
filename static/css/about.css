@@ -1,0 +1,17 @@
+.about {
+	text-align : center;
+	color : #ff5050;
+	position: fixed;
+    top: 60%;
+    left: 48%;
+    margin-top: -130px;
+    margin-left: -200px;
+	height: 100px;
+    width: 500px;
+	background-color: black;
+	border-radius: 30px;
+}
+.text {
+	position : absolute;
+	top: 30%;
+}

@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
+		<meta charset="utf-8"/>
         <title>회원가입 페이지</title>
-        <link rel="stylesheet" type="text/css" href="../static/css/signup.css">
+        <style>
+            body{
+                text-align: center
+            }
+            table{
+                text-align: center;
+                margin: auto;
+                border-style: dotted
+            }
+            .arial{
+                font-family:serif
+            }
+            
+        </style>
+        <script>
+			function btn(){
+				alert("저장완료!")
+            }
+        </script>
     </head>
     <body>
         <h1 class="arial">" Sign up Page "</h1>
@@ -12,31 +31,32 @@
             <table style="padding-top: 25px; padding-right: 30px;padding-bottom: 25px;padding-left: 30px;">
                 <tr>
                     <td>이름 : </td>
-                    <td><input type="text" name="user_name" placeholder="이름을 입력하세요."></td><br><br>
+                    <td><input type="text" name="user's_name" placeholder="이름을 입력하세요."></td><br><br>
                 </tr>
                 <tr>
                     <td>아이디 : </td>
-                    <td><input type="text" name="user_id" placeholder="아이디를 입력하세요."></td>
+                    <td><input type="text" name="user's_id" placeholder="아이디를 입력하세요."></td>
                 </tr>
                  <tr>
                     <td>비밀번호 : </td>
-                     <td><input type="text" name="user_pw" placeholder="비밀번호를 입력하세요."></td>
+                     <td><input type="text" name="user's_id" placeholder="비밀번호를 입력하세요."></td>
                 </tr>
                  <tr>
                     <td>이메일 : </td>
-                    <td><input type="text" name="user_email" placeholder="이메일을 입력하세요."></td>
+                    <td><input type="text" name="user's_id" placeholder="이메일을 입력하세요."></td>
                     <td>
                         <select name="email_address">
                             <option value="gmail.com">@gmail.com</option>
                             <option value="name.com">@naver.com</option>
                             <option value="yahoo.como">@yahoo.com</option>
                             <option value="hanyang.ac.kr">@hanyang.ac.kr</option>
-                            <option value="x">직접입력</option>
+                            <option value="x">직접입력</option>e
                         </select>
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="회원가입" id="create_acc">
+            <input type="submit" value="저장하기" onclick="javacript:btn()"></a>
         </form>
+        <p> 꼭 <strong>"저장하기"</strong>를 누르신 후 <strong>"채팅하러가기"</strong>버튼을 눌러주세요!</p>  
     </body>
 </html>
