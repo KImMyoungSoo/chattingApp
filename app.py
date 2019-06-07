@@ -7,17 +7,6 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 DATABASE = 'test.db'
 
-def get_login(userid, pwd):
-    db = sqlite3.connect("test.db")
-    cur = db.cursor()
-    res = cur.execute("SELECT EXISTS (SELECT * FROM user WHERE userid='%s' AND pwd = '%s' AS SUCCESS", userid, pwd)
-    db.commit()
-    cur.close()
-    db.close()
-    if res == 1:
-        return True
-    else:
-        return False
 
 @app.route('/')
 def index():
@@ -34,21 +23,7 @@ def login():
 
     '''
     @TODO : db connect and compare user id and pw
-    '''
-    if(get_login(user_id, user_pw) == True):
-    # session['account_id'] = 
-    '''
-    @TODO : session create with db
-    '''
-    return redirect('/', code=302)
-
-@app.route('/account/login')
-def login():
-    user_id = request.form["user_id"]
-    user_pw = request.form["user_pw"]
-
-    '''
-    @TODO : db connect and compare user id and pw
+    디비에서 받아온 user_id와 pw 를 꼭 변수로 받아 둘 것!!
     '''
     # session['account_id'] = 
     '''
@@ -64,14 +39,14 @@ def signup():
 def create():
     user_id = request.form["user_id"]
     user_pw = request.form["user_pw"]
-    user_em = request.form["user.email"]
+    user_em = request.form["user_email"]
     user_name = request.form["user_name"]
 
     '''
-    @TODO : 디비에 user 추가
+    @TODO : 디비에 user 추가 -> 회원가입 페이지로 랜더링
     '''
 
-    return
+    return redirect('/', code=302)
 
 #app start
 if __name__ == '__main__':
