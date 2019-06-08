@@ -17,6 +17,9 @@ def init_db():
     if(tb_lst == 0):
         print("> created DB")
         cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, username TEXT);")
+        '''
+        @TODO : 채팅방 채팅로그등 기능구현에 필요한 테이블 추가 생성
+        '''
     db.commit()
     cur.close()
     db.close()
@@ -69,26 +72,41 @@ def create():
     return redirect('/', code=302)
 
 #Socketio Part
+
+#connecting
 @socketio.on('connect', namespace='/chat')
 def connect():
     print("Connected ...")
 
+#처음 채팅방에 들어왔을때
 @socketio.on('first', namespace='/chat')
 def test(data):
     print(data)
+    # print('-----------------')
+    # account = session['account_id']
+    # print(account)
+    # print('-----------------')
     sess = str(session['user_id'])
     sess = sess[2:-3]
     print(sess)
     mes = sess + " 님 께서 입장하셨습니다."
+    '''
+    @TODO : 기존의 로그를 불러올 수 있어야 함 모든 로그를 불러오면 많을수 있으므로 가장 최신의 몇개정도를 불러오는게 좋을듯 함
+    '''
     emit('makechat',{'type': 'connect', 'name': 'SERVER', 'message': mes} , broadcast = True)
 
+# 유저가 입력한 message를 모두에게 전송
 @socketio.on('message', namespace='/chat')
 def message(data):
     print(data)
     ty = data['type']
     msg = data['message']
     sess = str(session['user_id'])
-    sess = sess[2:-3]
+    sess = sess[2:-3] # sess => user name 
+    account = session['account_id'] # account => userid
+    '''
+    @TODO : 채팅방 로그 생성 즉 데이터를 디비에 추가
+    '''
     emit('makechat',{'type': ty, 'name': sess, 'message': msg}, broadcast = True, include_self=False)
 
 @socketio.on('disconnect', namespace='/chat')
