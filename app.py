@@ -24,7 +24,7 @@ def init_db():
 @app.route('/')
 def index():
     if session.get("account_id") is not None:
-        return render_template('signup.html')
+        return render_template('index.html')
     else :
         return render_template('login.html')
 
@@ -41,6 +41,7 @@ def login():
     flag = cur.fetchone()[0]
     if flag == 1:
         session["account_id"] = user_id
+        cur.execute("SELECT username FROM user WHERE userid == ?;", (user_id))
         print('> session : ' + session['account_id'])
         return redirect('/', code=302)
     else:
@@ -65,6 +66,13 @@ def create():
     db.close()
 
     return redirect('/', code=302)
+
+#Socketio Part
+@socketio.on('connect', namespace='/chat')
+def connect(data):
+    temp = int(data)
+    emit('makechat',"server : " + session[]
+
 
 #app start
 if __name__ == '__main__':
