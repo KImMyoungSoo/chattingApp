@@ -41,7 +41,8 @@ def login():
     flag = cur.fetchone()[0]
     if flag == 1:
         session["account_id"] = user_id
-        cur.execute("SELECT username FROM user WHERE userid == ?;", (user_id))
+        cur.execute("SELECT username FROM user WHERE userid = ?;", [user_id])
+        session["user_id"] = cur.fetchone()
         print('> session : ' + session['account_id'])
         return redirect('/', code=302)
     else:
@@ -69,10 +70,26 @@ def create():
 
 #Socketio Part
 @socketio.on('connect', namespace='/chat')
-def connect(data):
-    temp = int(data)
-    emit('makechat',"server : " + session[]
+def connect():
+    print("Connected ...")
 
+@socketio.on('first', namespace='/chat')
+def test(data):
+    print(data)
+    sess = str(session['user_id'])
+    sess = sess[2:-3]
+    print(sess)
+    mes = sess + " 님 께서 입장하셨습니다."
+    emit('makechat',{'type': 'connect', 'name': 'SERVER', 'message': mes} , broadcast = True)
+
+@socketio.on('message', namespace='/chat')
+def message(data):
+    print(data)
+    ty = data['type']
+    msg = data['message']
+    sess = str(session['user_id'])
+    sess = sess[2:-3]
+    emit('makechat',{'type': ty, 'name': sess, 'message': msg}, broadcast = True, include_self=False)
 
 #app start
 if __name__ == '__main__':
