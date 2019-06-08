@@ -91,6 +91,13 @@ def message(data):
     sess = sess[2:-3]
     emit('makechat',{'type': ty, 'name': sess, 'message': msg}, broadcast = True, include_self=False)
 
+@socketio.on('disconnect', namespace='/chat')
+def disconnect():
+    sess = str(session['user_id'])
+    sess = sess[2:-3]
+    mes = sess + " 님 께서 퇴장하셨습니다."
+    emit('makechat',{'type': 'disconnect', 'name': 'SERVER', 'message': mes}, broadcast = True, include_self=False)
+
 #app start
 if __name__ == '__main__':
     init_db()
