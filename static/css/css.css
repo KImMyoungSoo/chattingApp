@@ -1,12 +1,11 @@
 * {
-	margin: 0px;
-	padding: 0px;
+	margin: 0px auto;
+	padding: 0px auto;
 }
 
 body {
 	overflow: hidden;
-	background: #DD5246;
-	background-image: url();
+	background-image: url(../img/1.jpg);
 	font-family: 'Open Sans', 'Roboto', 'Ubuntu', sans-serif;
 	font-size: 16px;
 }
@@ -150,7 +149,7 @@ input[type="checkbox"] {
 .me .image {
 	width: 70px;
 	height: 70px;
-	background: #FFF url(images/me.jpg) no-repeat center;
+	background: #FFF url(../img/me.jpg) no-repeat center;
 	background-size: cover;
 	border-radius: 100%;
 	cursor: pointer;
@@ -522,7 +521,7 @@ header {
 }
 
 .chatInfo .my-image {
-	background-image: url(../img/silver.jpg);
+	background-image:url(../img/silver.jpg);
 }
 
 .chatInfo .name {
@@ -613,12 +612,13 @@ div[class~="onTop"] > .fixed {
 .leftSide {
 	display: inline-block;
 	clear: none;
-	float: left;
+	float: right;
 }
 
 .leftSide .chatName {
 	float: right;
-	margin-left: 900px;
+	clear: right;
+	margin-left: 20px;
 	margin-top: 13px;
 	color: #444;
 	font-weight: 600;
@@ -628,7 +628,7 @@ div[class~="onTop"] > .fixed {
 .leftSide .chatStatus {
 	float: right;
 	clear: right;
-	margin-left: 1020px;
+	margin-left: 20px;
 	margin-top: 5px;
 	color: #DD5246;
 	font-weight: 300;
@@ -670,7 +670,7 @@ div[class~="onTop"] > .fixed {
 }
 
 .userBg {
-	background: url("../img/1.jpg") 100% center;
+	background: url(../img/1.jpg) 100% center;
 	background-size: 1600px 900px;
 }
 
@@ -990,3 +990,20 @@ div[class~="onTop"] > .fixed {
 	margin-left: 112px;
 	color: #DD5246;
 }
+
+::-webkit-scrollbar {
+	height: 12px;
+}
+
+::-webkit-scrollbar-track {
+	border: 1px solid #DD5246;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #DD5246;  
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: red;  
