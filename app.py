@@ -150,17 +150,21 @@ def message(data):
     db.commit()
     cur.close()
     db.close()
+    now = datetime.datetime.now()
+    tis = "%04d-%02d-%02d %02d:%02d:%02d" % (now.year, now.month, now.day, now.hour, now.minute, now.second)
     '''
     @TODO : 채팅방 로그 생성 즉 데이터를 디비에 추가
     '''
-    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg, 'ts': str(datetime.datetime.now())}, broadcast = True, include_self=False)
+    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg, 'ts': str(tis)}, broadcast = True, include_self=False)
 
 @socketio.on('disconnect', namespace='/chat')
 def disconnect():
     sess = str(session['user_id'])
     sess = sess[2:-3]
     mes = sess + " 님 께서 퇴장하셨습니다."
-    emit('makechat',{'room': session['room'], 'type': 'disconnect', 'name': 'SERVER', 'message': mes, 'ts': datetime.datetime.now()}, broadcast = True, include_self=False)
+    now = datetime.datetime.now()
+    tis = "%04d-%02d-%02d %02d:%02d:%02d" % (now.year, now.month, now.day, now.hour, now.minute, now.second)
+    emit('makechat',{'room': session['room'], 'type': 'disconnect', 'name': 'SERVER', 'message': mes, 'ts': str(tis)}, broadcast = True, include_self=False)
 
 #app start
 if __name__ == '__main__':
