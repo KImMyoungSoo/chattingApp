@@ -113,7 +113,7 @@ def test(data):
     sess = sess[2:-3]
     print(sess)
     mes = sess + " 님 께서 입장하셨습니다."
-    cur.execute("SELECT real_nm, room_name, message, ts FROM L_log WHERE room_name=? ORDER BY id DESC LIMIT 100",(session['room'],))
+    cur.execute("SELECT real_nm, room_name, message, ts FROM L_log WHERE room_name=? ORDER BY id ASC LIMIT 100",(session['room'],))
     last_message = cur.fetchall()
     for ms in last_message:
         username, roomname, msg, ts = ms
@@ -153,7 +153,7 @@ def message(data):
     '''
     @TODO : 채팅방 로그 생성 즉 데이터를 디비에 추가
     '''
-    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg, 'ts': datetime.datetime.now()}, broadcast = True, include_self=False)
+    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg, 'ts': str(datetime.datetime.now())}, broadcast = True, include_self=False)
 
 @socketio.on('disconnect', namespace='/chat')
 def disconnect():
