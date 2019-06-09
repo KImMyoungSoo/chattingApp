@@ -17,8 +17,8 @@ def init_db():
     if(tb_lst == 0):
         print("> created DB")
         cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, username TEXT);")
-        cur.execute("CREATE TABLE L_log(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12), real_nm VARCHAR(12), room_name TEXT NOT NULL, message TEXT NOT NULL, ts TIMESTAMP DEFAULT (datetime('now','localtime'));")
-        cur.execute("CREATE TABLE P_log(id INTEGER PRIMARY KEY AUTOINCREMENT, s_user VARCHAR(12), r_user VARCHAR(12), message TEXT NOT NULL, ts TIMESTAMP DEFAULT(datetime('now','localtime'));")
+        cur.execute("CREATE TABLE L_log(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12), real_nm VARCHAR(12), room_name TEXT NOT NULL, message TEXT NOT NULL, ts TIMESTAMP DEFAULT (datetime('now','localtime')));")
+        cur.execute("CREATE TABLE P_log(id INTEGER PRIMARY KEY AUTOINCREMENT, s_user VARCHAR(12), r_user VARCHAR(12), message TEXT NOT NULL, ts TIMESTAMP DEFAULT(datetime('now','localtime')));")
         '''
         @TODO : 채팅방 채팅로그등 기능구현에 필요한 테이블 추가 생성
         '''
