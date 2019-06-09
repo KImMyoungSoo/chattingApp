@@ -2,6 +2,7 @@
 from flask import Flask, render_template, session, request, redirect
 from flask_socketio import SocketIO, emit
 import sqlite3
+import datetime
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -112,11 +113,18 @@ def test(data):
     sess = sess[2:-3]
     print(sess)
     mes = sess + " 님 께서 입장하셨습니다."
-    cur.execute("SELECT real_nm, room_name, message FROM L_log WHERE room_name=? ORDER BY id DESC LIMIT 100",(session['room'],))
+    cur.execute("SELECT real_nm, room_name, message, ts FROM L_log WHERE room_name=? ORDER BY id DESC LIMIT 100",(session['room'],))
     last_message = cur.fetchall()
     for ms in last_message:
-        username, roomname, msg = ms
-        emit('makechat',{'room': session['room'], 'type': 'message', 'name': username, 'message': msg})
+        username, roomname, msg, ts = ms
+        sess = str(session['user_id'])
+        sess = sess[2:-3]
+        ty = None
+        if username == sess :
+            ty = 'me'
+        else :
+            ty = 'message'
+        emit('makechat',{'room': session['room'], 'type': ty, 'name': username, 'message': msg, 'ts': ts})
         print(ms)
     '''
     @TODO : 기존의 로그를 불러올 수 있어야 함 모든 로그를 불러오면 많을수 있으므로 가장 최신의 몇개정도를 불러오는게 좋을듯 함
@@ -124,7 +132,7 @@ def test(data):
     db.commit()
     cur.close()
     db.close()
-    emit('makechat',{'room': session['room'], 'type': 'connect', 'name': 'SERVER', 'message': mes} , broadcast = True)
+    emit('makechat',{'room': session['room'], 'type': 'connect', 'name': 'SERVER', 'message': mes, 'ts': str(datetime.datetime.now())} , broadcast = True)
 
 # 유저가 입력한 message를 모두에게 전송
 @socketio.on('message', namespace='/chat')
@@ -145,14 +153,14 @@ def message(data):
     '''
     @TODO : 채팅방 로그 생성 즉 데이터를 디비에 추가
     '''
-    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg}, broadcast = True, include_self=False)
+    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg, 'ts': datetime.datetime.now()}, broadcast = True, include_self=False)
 
 @socketio.on('disconnect', namespace='/chat')
 def disconnect():
     sess = str(session['user_id'])
     sess = sess[2:-3]
     mes = sess + " 님 께서 퇴장하셨습니다."
-    emit('makechat',{'room': session['room'], 'type': 'disconnect', 'name': 'SERVER', 'message': mes}, broadcast = True, include_self=False)
+    emit('makechat',{'room': session['room'], 'type': 'disconnect', 'name': 'SERVER', 'message': mes, 'ts': datetime.datetime.now()}, broadcast = True, include_self=False)
 
 #app start
 if __name__ == '__main__':

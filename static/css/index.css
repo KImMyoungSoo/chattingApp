@@ -36,18 +36,22 @@
 
 /* 내가 보낸 메시지 */
 .me {
-  width: 90%;
+  width: 40%;
   margin: auto;
   background-color: lemonchiffon;
   border-radius: 5px;
   margin-top: 10px;
+  margin-right: 30px;
+  text-align: center;
 }
 
 /* 상대방이 보낸 메시지 */
 .other {
-  width: 90%;
+  width: 40%;
   margin: auto;
   background-color: white;
   border-radius: 5px;
   margin-top: 10px;
+  margin-left: 30px;
+  text-align: center;
 }
