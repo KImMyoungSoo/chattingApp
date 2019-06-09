@@ -117,7 +117,7 @@ def message(data):
     sess = str(session['user_id'])
     sess = sess[2:-3] # sess => user name 
     account = session['account_id'] # account => userid
-    cur.execute("INSERT INTO L_log(userid, real_nm, message, ts, room_name) VALUES(?, ?, ?, ?);",(account, sess, msg, ty))
+    cur.execute("INSERT INTO L_log(userid, real_nm, message, room_name) VALUES(?, ?, ?, ?);",(account, sess, msg, ty))
     db.commit()
     cur.close()
     db.close()
