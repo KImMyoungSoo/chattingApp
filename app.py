@@ -1,5 +1,5 @@
 # _*_ coding: utf-8 _*_
-from flask import Flask, render_template, session, request, redirect, g
+from flask import Flask, render_template, session, request, redirect
 from flask_socketio import SocketIO, emit
 import sqlite3
 
@@ -17,6 +17,8 @@ def init_db():
     if(tb_lst == 0):
         print("> created DB")
         cur.execute("CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12) NOT NULL, pwd TEXT NOT NULL, email TEXT NOT NULL, username TEXT);")
+        cur.execute("CREATE TABLE L_log(id INTEGER PRIMARY KEY AUTOINCREMENT, userid VARCHAR(12), real_nm VARCHAR(12), room_name TEXT NOT NULL, message TEXT NOT NULL, ts TIMESTAMP DEFAULT (datetime('now','localtime'));")
+        cur.execute("CREATE TABLE P_log(id INTEGER PRIMARY KEY AUTOINCREMENT, s_user VARCHAR(12), r_user VARCHAR(12), message TEXT NOT NULL, ts TIMESTAMP DEFAULT(datetime('now','localtime'));")
         '''
         @TODO : 채팅방 채팅로그등 기능구현에 필요한 테이블 추가 생성
         '''
@@ -81,6 +83,8 @@ def connect():
 #처음 채팅방에 들어왔을때
 @socketio.on('first', namespace='/chat')
 def test(data):
+    db = sqlite3.connect("test.db")
+    cur = db.cursor()
     print(data)
     # print('-----------------')
     # account = session['account_id']
@@ -90,20 +94,33 @@ def test(data):
     sess = sess[2:-3]
     print(sess)
     mes = sess + " 님 께서 입장하셨습니다."
+    cur.execute("SELECT userid, message FROM L_log ORDER BY id DESC LIMIT 100")
+    last_message = cur.fetchall()
+    for ms in last_message:
+        print(ms)
     '''
     @TODO : 기존의 로그를 불러올 수 있어야 함 모든 로그를 불러오면 많을수 있으므로 가장 최신의 몇개정도를 불러오는게 좋을듯 함
     '''
+    db.commit()
+    cur.close()
+    db.close()
     emit('makechat',{'type': 'connect', 'name': 'SERVER', 'message': mes} , broadcast = True)
 
 # 유저가 입력한 message를 모두에게 전송
 @socketio.on('message', namespace='/chat')
 def message(data):
+    db = sqlite3.connect("test.db")
+    cur = db.cursor()
     print(data)
     ty = data['type']
     msg = data['message']
     sess = str(session['user_id'])
     sess = sess[2:-3] # sess => user name 
     account = session['account_id'] # account => userid
+    cur.execute("INSERT INTO L_log(userid, real_nm, message, ts, room_name) VALUES(?, ?, ?, ?);",(account, sess, msg, ty))
+    db.commit()
+    cur.close()
+    db.close()
     '''
     @TODO : 채팅방 로그 생성 즉 데이터를 디비에 추가
     '''
