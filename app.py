@@ -29,7 +29,7 @@ def init_db():
 @app.route('/')
 def index():
     if session.get("account_id") is not None:
-        return render_template('index.html')
+        return render_template('rooms.html')
     else :
         return render_template('login.html')
 
@@ -73,6 +73,24 @@ def create():
 
     return redirect('/', code=302)
 
+@app.route('/room1')
+def rooms1():
+    session['room'] = 'room1'
+    print(">>> room session : " + session['room'])
+    return render_template('index.html')
+
+@app.route('/room2')
+def rooms2():
+    session['room'] = 'room2'
+    print(">>> room session : " + session['room'])
+    return render_template('index.html')
+
+@app.route('/room3')
+def rooms3():
+    session['room'] = 'room3'
+    print(">>> room session : " + session['room'])
+    return render_template('index.html')
+
 #Socketio Part
 
 #connecting
@@ -94,9 +112,11 @@ def test(data):
     sess = sess[2:-3]
     print(sess)
     mes = sess + " 님 께서 입장하셨습니다."
-    cur.execute("SELECT userid, message FROM L_log ORDER BY id DESC LIMIT 100")
+    cur.execute("SELECT real_nm, room_name, message FROM L_log WHERE room_name=? ORDER BY id DESC LIMIT 100",(session['room'],))
     last_message = cur.fetchall()
     for ms in last_message:
+        username, roomname, msg = ms
+        emit('makechat',{'room': session['room'], 'type': 'message', 'name': username, 'message': msg})
         print(ms)
     '''
     @TODO : 기존의 로그를 불러올 수 있어야 함 모든 로그를 불러오면 많을수 있으므로 가장 최신의 몇개정도를 불러오는게 좋을듯 함
@@ -104,7 +124,7 @@ def test(data):
     db.commit()
     cur.close()
     db.close()
-    emit('makechat',{'type': 'connect', 'name': 'SERVER', 'message': mes} , broadcast = True)
+    emit('makechat',{'room': session['room'], 'type': 'connect', 'name': 'SERVER', 'message': mes} , broadcast = True)
 
 # 유저가 입력한 message를 모두에게 전송
 @socketio.on('message', namespace='/chat')
@@ -113,26 +133,26 @@ def message(data):
     cur = db.cursor()
     print(data)
     ty = data['type']
-    msg = data['message'].encode("UTF-8")
+    msg = data['message']
     sess = str(session['user_id'])
     sess = sess[2:-3] # sess => user name 
     account = session['account_id'] # account => userid
-    cur.execute("INSERT INTO L_log(userid, real_nm, message, room_name) VALUES(?, ?, ?, ?);",(account, sess, msg, ty))
+    roomname = session['room']
+    cur.execute("INSERT INTO L_log(userid, real_nm, message, room_name) VALUES(?, ?, ?, ?);",(account, sess, msg,roomname))
     db.commit()
     cur.close()
     db.close()
     '''
     @TODO : 채팅방 로그 생성 즉 데이터를 디비에 추가
     '''
-    emit('makechat',{'type': ty, 'name': sess, 'message': msg}, broadcast = True, include_self=False)
+    emit('makechat',{'room': session['room'], 'type': ty, 'name': sess, 'message': msg}, broadcast = True, include_self=False)
 
 @socketio.on('disconnect', namespace='/chat')
 def disconnect():
     sess = str(session['user_id'])
     sess = sess[2:-3]
     mes = sess + " 님 께서 퇴장하셨습니다."
-    mes = mes.encode("UTF-8")
-    emit('makechat',{'type': 'disconnect', 'name': 'SERVER', 'message': mes}, broadcast = True, include_self=False)
+    emit('makechat',{'room': session['room'], 'type': 'disconnect', 'name': 'SERVER', 'message': mes}, broadcast = True, include_self=False)
 
 #app start
 if __name__ == '__main__':

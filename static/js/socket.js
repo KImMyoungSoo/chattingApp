@@ -1,7 +1,9 @@
 $(document).ready(function() {
+    let room = null
     let socket_chat = io.connect(location.protocol + "//" + document.domain + ":" + location.port + "/chat");
 
     socket_chat.on('connect', function() {
+        console.log('here socket')
         socket_chat.emit('first', {data: "1"});
     });
     
@@ -10,6 +12,18 @@ $(document).ready(function() {
         var message = document.createElement('div');
         var node = document.createTextNode(`${data.name} : ${data.message}`);
         var className = '';
+
+        if (room == null){
+            room = data['room']
+        }
+
+        console.log(data['room'])
+        console.log(room)
+
+        if (room !== data['room']){
+            console.log("why?")
+            return
+        }
 
         // 타입에 따라 적용할 클래스를 다르게 지정
         switch(data.type) {
