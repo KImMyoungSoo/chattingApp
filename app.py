@@ -113,7 +113,7 @@ def message(data):
     cur = db.cursor()
     print(data)
     ty = data['type']
-    msg = data['message']
+    msg = data['message'].encode("UTF-8")
     sess = str(session['user_id'])
     sess = sess[2:-3] # sess => user name 
     account = session['account_id'] # account => userid
@@ -131,6 +131,7 @@ def disconnect():
     sess = str(session['user_id'])
     sess = sess[2:-3]
     mes = sess + " 님 께서 퇴장하셨습니다."
+    mes = mes.encode("UTF-8")
     emit('makechat',{'type': 'disconnect', 'name': 'SERVER', 'message': mes}, broadcast = True, include_self=False)
 
 #app start
