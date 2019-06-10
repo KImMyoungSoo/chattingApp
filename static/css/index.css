@@ -1,5 +1,8 @@
 /* 메인 */
 #main {
+  background: url(../img/1.jpg) 100% center;
+  background-repeat: no-repeat;
+  background-size: auto;
   margin: auto;
   margin-top: 100px;
   border-radius: 20px;
@@ -16,48 +19,81 @@
   overflow-y: auto;
 }
 
-/* 제목 영역 */
-#subj {
-  text-align: center;
-  background-color: aquamarine;
-}
-
 /* 접속 알림 */
 .connect {
-  width: 90%;
+  width: 85%;
   margin: auto;
+  padding: auto;
   background-color: aquamarine;
   text-align: center;
   margin-top: 10px;
+  border-radius: 4px;
 }
 
 /* 접속 종료 알림 */
 .disconnect {
-  width: 90%;
+  width: 85%;
   margin: auto;
+  padding: auto;
   background-color: indianred;
   text-align: center;
   margin-top: 10px;
+  border-radius: 4px;
 }
-
 /* 내가 보낸 메시지 */
 .me {
-  width: 40%;
-  margin: auto;
-  background-color: lemonchiffon;
-  border-radius: 5px;
-  margin-top: 10px;
-  margin-right: 30px;
-  text-align: center;
+	position: relative;
+	width: auto;
+	min-width: 100px;
+	max-width: 45%;
+	height: auto;
+	padding: 25px;
+	padding-bottom: 25px;
+	margin: 20px 15px;
+	margin-bottom: 0px;
+	background: #effdde;
+	border-radius: 7px;
+	clear: both;
+	float: right;
 }
 
 /* 상대방이 보낸 메시지 */
 .other {
-  width: 40%;
-  margin: auto;
-  background-color: white;
-  border-radius: 5px;
-  margin-top: 10px;
-  margin-left: 30px;
-  text-align: center;
+	position: relative;
+	width: auto;
+	min-width: 100px;
+	max-width: 45%;
+	height: auto;
+	padding: 25px;
+	padding-bottom: 25px;
+	margin: 20px 15px;
+	margin-bottom: 0px;
+	background: #FFF;
+	border-radius: 7px;
+	clear: both;
+	float: left;
+}
+
+#send_btn {
+	border: 1px solid #4A8AF4;
+	border-radius: 5px;
+	outline: none;
+	cursor: pointer;
+	background: #4A8AF4;
+	color: white;
+	padding: 10px;
+}
+
+#send_btn:hover {
+	background: #7DABF4;
+	border-color: #7DABF4;
+	color: white;
+}
+
+input[type="text"] {
+	border: 1px solid grey;
+	border-radius: 5px;
+	padding-left: 4px;
+	outline: none;
+	padding: 10px;
 }
