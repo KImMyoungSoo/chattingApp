@@ -13,10 +13,13 @@ $(document).ready(function() {
         var message = document.createElement('div');
         var ts = document.createTextNode(`${data.ts}`)
         var node = document.createTextNode(`${data.name} : ${data.message}`);
+        var sub = document.getElementById('subj')
+        var h = document.createTextNode(`${data.room}`)
         var className = '';
 
         if (room == null){
             room = data['room']
+            sub.appendChild(h)
         }
 
         console.log(data['room'])

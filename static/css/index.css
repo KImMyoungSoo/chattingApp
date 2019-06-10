@@ -16,6 +16,12 @@
   overflow-y: auto;
 }
 
+/* 제목 영역 */
+#subj {
+  text-align: center;
+  background-color: aquamarine;
+}
+
 /* 접속 알림 */
 .connect {
   width: 90%;
