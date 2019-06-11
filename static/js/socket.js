@@ -9,26 +9,33 @@ $(document).ready(function() {
     
     socket_chat.on('makechat', function(data){
         var chat = document.getElementById('chat');
+        var tim = document.createElement('div');
         var message = document.createElement('div');
+        var ts = document.createTextNode(`${data.ts}`)
         var node = document.createTextNode(`${data.name} : ${data.message}`);
+        var sub = document.getElementById('subj')
+        var h = document.createTextNode(`${data.room}`)
         var className = '';
 
         if (room == null){
             room = data['room']
+            sub.appendChild(h)
         }
 
         console.log(data['room'])
         console.log(room)
 
         if (room !== data['room']){
-            console.log("why?")
             return
         }
-
         // 타입에 따라 적용할 클래스를 다르게 지정
         switch(data.type) {
             case 'message':
             className = 'other';
+            break;
+            
+            case 'me':
+            className = 'me';
             break;
 
             case 'connect':
@@ -41,7 +48,10 @@ $(document).ready(function() {
         }
 
         message.classList.add(className);
+        tim.classList.add(className);
         message.appendChild(node);
+        tim.appendChild(ts);
+        chat.appendChild(tim)
         chat.appendChild(message);
     });
 
@@ -62,5 +72,9 @@ $(document).ready(function() {
     
         // 서버로 message 이벤트 전달 + 데이터와 함께
         socket_chat.emit('message', {type: 'message', message: message});
+    });
+
+    $("#back_btn").click(function(){
+        window.location.replace("/");
     });
 });
